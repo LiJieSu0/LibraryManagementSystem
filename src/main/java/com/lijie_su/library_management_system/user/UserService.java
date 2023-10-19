@@ -21,5 +21,13 @@ public class UserService {
         }
         userRepository.save(user);
     }
+    
+    public User getUserById(Long user_id) {
+        Optional<User> u=userRepository.findById(user_id);
+        if(!u.isPresent()){
+            throw new IllegalStateException("User id is not exist");
+        }
+        return u.get();
+    }
 
 }

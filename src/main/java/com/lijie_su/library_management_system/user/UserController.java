@@ -3,6 +3,7 @@ package com.lijie_su.library_management_system.user;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,5 +17,9 @@ public class UserController {
     @GetMapping
     public List<User> getAllUser(){
         return userService.getAllUser(); 
+    }
+    @GetMapping(path="api/v1/user/{user_id}")
+    public User getUserById(@PathVariable Long user_id){
+        return userService.getUserById(user_id);
     }
 }

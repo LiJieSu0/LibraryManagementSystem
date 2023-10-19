@@ -29,6 +29,16 @@ public class BookService {
     public List<Book> getBooks() {
         return bookRepository.findAll();
     }
+
+    public Book findBookByName(String book_name) {
+        Optional<Book> bookOptional=bookRepository.findBookByName(book_name);
+        if(!bookOptional.isPresent()){
+            throw new IllegalStateException(book_name+ " is not exist.");
+        }
+        return bookOptional.get();
+    }
+
+
     public void registerNewBook(Book newBook) {
         Optional<Book> bookOptional=bookRepository.findBookByName(newBook.getBook_name());
         if(bookOptional.isPresent()){
@@ -95,8 +105,26 @@ public class BookService {
                 }
             }
         }
-        LendingRecord record=new LendingRecord(user_id, LocalDate.now(), books_id);
+        LendingRecord record=new LendingRecord(user_id, LocalDate.now(), books_id);//Cannot retrieve the record id
         lendingRecordRepository.save(record);
     }
+
+    public void returnBook(List<Long> books_id, Long user_id) {
+        var recordList=lendingRecordRepository.findRecordByUserId(user_id);
+        if(recordList.size()==0){
+            throw new IllegalStateException("No record exist");
+        }
+        for(var r: recordList){
+            if(r.getBorrow_books_id().equals(books_id)){
+                r.setIs_returned(true);
+                lendingRecordRepository.save(r);
+                //TODO send return success message
+                return;
+            }
+        }
+        throw new IllegalStateException("No matching records");
+    
+    }
+
 
 }

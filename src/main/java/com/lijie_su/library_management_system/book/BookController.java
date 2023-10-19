@@ -27,9 +27,9 @@ public class BookController {
         return bookService.getBooks();
     }
 
-    @GetMapping(path="id")
-    public List<Long> getID(){
-        return List.of(1L,2L);
+    @GetMapping(path="{book_name}")
+    public Book findBookByName(@PathVariable String book_name){
+        return bookService.findBookByName(book_name);
     }
 
     @PostMapping
@@ -40,6 +40,10 @@ public class BookController {
     @PostMapping(path="lending/{user_id}")
     public void lendingBook(@RequestBody List<Long> books_id,@PathVariable Long user_id){
         bookService.lendingBook(books_id,user_id);
+    }
+    @PostMapping(path="return/{user_id}")
+    public void returnBook(@RequestBody List<Long> books_id, @PathVariable Long user_id){
+        bookService.returnBook(books_id,user_id);
     }
 
     @PutMapping(path="/id/{book_id}")

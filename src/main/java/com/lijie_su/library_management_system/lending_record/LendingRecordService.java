@@ -13,4 +13,11 @@ public class LendingRecordService {
     public List<LendingRecord> getAllRecords() {
         return lendingRecordRepository.findAll();
     }
+    public List<LendingRecord> getRecordByUserId(Long user_id) {
+        var recordList=lendingRecordRepository.findRecordByUserId(user_id);
+        if(recordList.size()==0){
+            throw new IllegalStateException("No record exist.");
+        }
+        return recordList;
+    }
 }

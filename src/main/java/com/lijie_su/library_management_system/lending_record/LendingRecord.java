@@ -29,6 +29,7 @@ public class LendingRecord {
     private LocalDate due_date; 
     private List<Long> borrow_books_id;
     private boolean is_returned;
+    private boolean is_overdue;
 
     public LendingRecord(){
     }
@@ -36,6 +37,7 @@ public class LendingRecord {
         this.borrower_id = borrower_id;
         this.borrower_date = borrower_date;
         this.borrow_books_id = borrow_books_id;
+        this.is_returned=false;
     }
     public Long getId() {
         return id;
